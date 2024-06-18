@@ -1,0 +1,28 @@
+version: '3'
+
+volumes:
+  mysql_data: {}
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    command: --collation-server=utf8mb4_unicode_ci --character-set-server=utf8mb4
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin1234
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=chat
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - '81:80'
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=admin1234
